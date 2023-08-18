@@ -1,7 +1,9 @@
 <script setup>
-  import { ref, onBeforeUnmount, onMounted } from 'vue'
+  import { ref, onBeforeUnmount, onMounted, watch } from 'vue'
+  import CounterInput from './components/CounterInput.vue'
 
   const counter = ref(0)
+  const counter2 = ref(0)
 
   const handleKeyPress = (event) => {
     if (event.key === '+') counter.value++
@@ -16,32 +18,42 @@
     document.removeEventListener('keyup', handleKeyPress)
   })
 
+  const props = defineProps({
+    initialValue: {
+      type: Number,
+      default: 0
+    }
+  })
+
+  watch(() => props.initialValue, (newValue) => {
+    counter.value = newValue
+    counter2.value = 0
+  }, { immediate: true })
+
 </script>
 
 <template>
   <div id="app">
-    
+    <CounterInput v-model="counter">
+      Current value of counter2 is {{ counter2 }}
+      <template #warning>
+        STILL BETA
+      </template>
+    </CounterInput>
+    <hr />
+
     <button @click="counter++">+</button>
-    {{ counter }}
+    {{ counter }} / {{ counter2 }}
     <button @click="counter--">-</button>
 
     <button data-test="reset" v-if="counter < 0" @click="counter = 0">
       Reset
     </button>
+
+    <hr />
+
+    <button @click="counter2++">inc2</button>
+    <button @click="counter2--">dec2</button>
+      
   </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
