@@ -41,13 +41,14 @@ describe('Counter', () => {
   test("shows reset button when counter is below zero", async () => {
     await findButtonByText("-").trigger('click')
     expect(wrapper.text()).toContain(-1)
+    expect(findButtonByText(RESET_TEXT)).toBeTruthy()
   })
 
   test("does not show reset button when counter is below zero", () => {
     expect(findButtonByText(RESET_TEXT)).toBe(undefined)
   })
 
-  test("increases and decreases by one when plus key is pressed", async () => {
+  test("increases and decreases by one when key is pressed", async () => {
     const plusKeyEvent = new KeyboardEvent('keyup', { key: '+' })
     await document.dispatchEvent(plusKeyEvent)
     expect(wrapper.text()).toContain(1)
