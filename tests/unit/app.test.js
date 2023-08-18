@@ -81,7 +81,7 @@ describe('Counter', () => {
 
   // CounterInput ====================================
 
-  test('passs current value to CounterInput', async () => {
+  test('passes current value to CounterInput', async () => {
     await wrapper.setProps({ initialValue: INITIAL_VALUE })
     expect(wrapper.findComponent(CounterInput).props()).toEqual({ 
       modelValue: INITIAL_VALUE 
