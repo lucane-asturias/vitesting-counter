@@ -12,9 +12,7 @@ describe('Counter', () => {
     wrapper = shallowMount(App)
   })
 
-  afterEach(() => {
-    wrapper.unmount()
-  })
+  afterEach(() => wrapper.unmount())
 
   test('shows 0 when initialized', () => {
     expect(wrapper.text()).toContain(0) 
